@@ -34,10 +34,10 @@ for sheet_index,row in enumerate(sheet.row):
 				print("Deleting row", sheet_index+1)
 				indexes_to_delete.append(sheet_index)
 
-		DeleteIfNeeded("contains", search_str not in cell_value)
+		DeleteIfNeeded("contains" , search_str not in cell_value)
 		DeleteIfNeeded("!contains", search_str in cell_value)
-		DeleteIfNeeded("=", search_str != cell_value)
-		DeleteIfNeeded("!=", search_str == cell_value)
+		DeleteIfNeeded("="        , search_str != cell_value)
+		DeleteIfNeeded("!="       , search_str == cell_value)
 
 for index in sorted(indexes_to_delete, reverse=True):
 	del sheet.row[index]
