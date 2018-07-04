@@ -1,3 +1,5 @@
+#!/bin/sh
+
 import pyexcel as p
 import string
 import os.path
