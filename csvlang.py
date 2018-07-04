@@ -4,7 +4,6 @@ import pyexcel as p
 import string
 import os.path
 
-
 if not os.path.isfile("config.csv"):
 	print("You must have a config.csv file set up.")
 	exit()
@@ -19,6 +18,7 @@ def col2num(col):
 
 config = p.get_sheet(file_name="config.csv")
 sheet = p.get_sheet(file_name=config.row[0][0])
+indexes_to_delete = []
 
 for sheet_index,row in enumerate(sheet.row):
 	config_sheet = config.get_array()
@@ -27,20 +27,23 @@ for sheet_index,row in enumerate(sheet.row):
 		search_operation = config_sheet[i][1]
 		search_str = config_sheet[i][2]
 		if search_operation == "contains":
-			if search_str not in row[search_col] :
+			if search_str in row[search_col] :
 				print("Deleting row", sheet_index+1)
-				del sheet.row[sheet_index]
+				indexes_to_delete.append(sheet_index)
 		elif search_operation == "!contains":
-			if search_str in row[search_col]:
+			if search_str not in row[search_col]:
 				print("Deleting row", sheet_index+1)
-				del sheet.row[sheet_index]
+				indexes_to_delete.append(sheet_index)
 		elif search_operation == "=":
 			if search_str == row[search_col]:
 				print("Deleting row", sheet_index+1)
-				del sheet.row[sheet_index]
+				indexes_to_delete.append(sheet_index)
 		elif search_operation == "!=":
 			if search_str != row[search_col]:
 				print("Deleting row", sheet_index+1)
-				del sheet.row[sheet_index]
+				indexes_to_delete.append(sheet_index)
+
+for index in sorted(indexes_to_delete, reverse=True):
+	del sheet.row[index]
 
 sheet.save_as(config.row[0][1])
