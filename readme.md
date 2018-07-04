@@ -21,7 +21,7 @@ To execute this, run csvlang.py in the same directory as config.csv.
 
 This example takes people.csv and specifies to output to a new file called people-updated.csv
 
-It searches column b for CEO and CFO. When it finds matches, it deletes that row.
+It searches column b for CEO and CFO. All matches that don't meet that filter get deleted.
 
 ## Supported Operations
 
