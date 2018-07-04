@@ -26,20 +26,24 @@ for sheet_index,row in enumerate(sheet.row):
 		search_col = col2num(config_sheet[i][0])
 		search_operation = config_sheet[i][1]
 		search_str = config_sheet[i][2]
+
 		if search_operation == "contains":
-			if search_str in row[search_col] :
+			if search_str not in row[search_col] :
 				print("Deleting row", sheet_index+1)
 				indexes_to_delete.append(sheet_index)
+
 		elif search_operation == "!contains":
-			if search_str not in row[search_col]:
+			if search_str in row[search_col]:
 				print("Deleting row", sheet_index+1)
 				indexes_to_delete.append(sheet_index)
+
 		elif search_operation == "=":
-			if search_str == row[search_col]:
+			if search_str != row[search_col]:
 				print("Deleting row", sheet_index+1)
 				indexes_to_delete.append(sheet_index)
+
 		elif search_operation == "!=":
-			if search_str != row[search_col]:
+			if search_str == row[search_col]:
 				print("Deleting row", sheet_index+1)
 				indexes_to_delete.append(sheet_index)
 
