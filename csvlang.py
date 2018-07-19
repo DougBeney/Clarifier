@@ -3,6 +3,7 @@
 import pyexcel as p
 import string
 import os.path
+import re
 
 if not os.path.isfile("config.csv"):
 	print("You must have a config.csv file set up.")
@@ -29,17 +30,23 @@ for sheet_index,row in enumerate(sheet.row):
 
 		cell_value = row[search_col]
 
-		def DeleteIfNeeded(op_condition, should_delete):
-			if search_operation == op_condition and should_delete:
+		def DeleteIfNeeded(op_condition, should_keep):
+			if search_operation == op_condition and not should_keep:
 				print("Deleting row", sheet_index+1)
 				indexes_to_delete.append(sheet_index)
 
-		DeleteIfNeeded("contains" , search_str not in cell_value)
-		DeleteIfNeeded("!contains", search_str in cell_value)
-		DeleteIfNeeded("="        , search_str != cell_value)
-		DeleteIfNeeded("!="       , search_str == cell_value)
+		DeleteIfNeeded("contains" ,   search_str in cell_value)
+		DeleteIfNeeded("!contains",   search_str not in cell_value)
+		DeleteIfNeeded("="        ,   search_str == cell_value)
+		DeleteIfNeeded("!="       ,   search_str != cell_value)
+		DeleteIfNeeded("regcontains", re.search(search_str, cell_value))
+		DeleteIfNeeded("!regcontains", not re.search(search_str, cell_value))
 
 for index in sorted(indexes_to_delete, reverse=True):
 	del sheet.row[index]
 
-sheet.save_as(config.row[0][1])
+save_dest = config.row[0][1]
+if (save_dest == "~print~"):
+	print(sheet)
+else:
+  sheet.save_as(save_dest)
