@@ -120,10 +120,7 @@ for row_index,row in enumerate(config_sheet):
 				if loc_len() > 1:
 					location_array[1] = col2num(location_array[1])-1
 				if loc_len() > 2:
-					if location_array[2] == "~":
-						location_array[2] = len(working_sheet.array[0]) # Column count
-					else:
-						location_array[2] = col2num(location_array[2])-1
+          location_array[2] = col2num(location_array[2])-1
 			else:
 				# get row array so we can easily check a col
 				sheet_array = working_sheet.row
@@ -133,11 +130,7 @@ for row_index,row in enumerate(config_sheet):
 					location_array[1] = int(location_array[1])-1
 					print(location_array)
 				if loc_len() > 2:
-					if location_array[2] == "~":
-						location_array[2] = len(working_sheet.array) # Row count
-						print(len(working_sheet.array))
-					else:
-						location_array[2] = int(location_array[2])-1
+					location_array[2] = int(location_array[2])-1
 
 			def DeleteIfNeeded(op_condition, should_keep):
 				force_true_lambda = lambda x,y: True

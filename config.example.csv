@@ -1,2 +1,2 @@
-csv-files/monkeys.csv,my-new-file.csv
-c,contains,monkey
+FILE, csv-files/monkeys.csv, ~print~
+COL, c, contains, monkey
