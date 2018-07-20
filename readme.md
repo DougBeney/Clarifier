@@ -19,7 +19,9 @@ The first thing you do when creating a `config.csv` file is add a `FILE` command
 
 It follows the following syntax:
 
-`FILE, input-file.csv, output-file.csv`
+```
+FILE, input-file.csv, output-file.csv
+```
 
 Instead of saving, you can even print the file to your terminal using `~print~`.
 
@@ -64,11 +66,15 @@ Especially when using numerical conditionals, you will want to tweak your start 
 
 Here are some examples:
 
-`COL, B:2, >, 5`
+```
+COL, B:2, >, 5
+```
 
 This filters column B for values that are greater than 5. The first row is probably a label (Ex. "Player Score") so we use that colon to specify a startpoint. It will start filtering on **row 2**.
 
-`COL, B:2:10, >, 5`
+```
+COL, B:2:10, >, 5
+```
 
 This does the same thing as the previous except we also define a stop point. It will stop filtering at row 10.
 
