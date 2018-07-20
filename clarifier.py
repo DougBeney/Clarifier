@@ -105,19 +105,24 @@ for row_index,row in enumerate(config_sheet):
 				err("Not enough arguments for REPLACE operation", fatal=True)
 			search_str = sc(row[1])
 			replace_str = sc(row[2])
-			for sheet_index,row_or_col in enumerate(sheet_array):
-				cell_value = str(row_or_col[location])
-				if OPERATION == "ROW":
-					working_cell_coord[1] = location
-					working_cell_coord[0] = sheet_index
-				else:
-					working_cell_coord[1] = sheet_index
-					working_cell_coord[0] = location
-				working_sheet_index = sheet_index
-				if OPERATION == "REPLACE":
-					row_or_col[location] = cell_value.replace(search_str, replace_str)
-				else: #REGREPLACE
-					row_or_col[location] = re.sub(search_str, replace_str, cell_value)
+			sheet_array = working_sheet.row
+			for sheet_index,row in enumerate(sheet_array):
+				for location,col in enumerate(row):
+					cell_value = str(row[location])
+					if OPERATION == "ROW":
+						working_cell_coord[1] = location
+						working_cell_coord[0] = sheet_index
+					else:
+						working_cell_coord[1] = sheet_index
+						working_cell_coord[0] = location
+					working_sheet_index = sheet_index
+					working_row = row
+					if OPERATION == "REPLACE":
+						print("replacing", search_str, "for", replace_str, "in", cell_value)
+						working_row[location] = cell_value.replace(search_str, replace_str)
+					else: #REGREPLACE
+						working_row[location] = re.sub(search_str, replace_str, cell_value)
+					sheet_array[sheet_index] = working_row
 
 		elif OPERATION == "ROW" or OPERATION == "COL":
 			# 0        1    2         3
