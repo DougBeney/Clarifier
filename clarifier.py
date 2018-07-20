@@ -16,8 +16,10 @@ if not os.path.isfile("config.csv"):
 	print("You must have a config.csv file set up.")
 	exit()
 
+
 config = p.get_sheet(file_name="config.csv")
 config_sheet = config.get_array()
+
 
 def err(*messages, fatal=False):
 	err_label  = "ERROR:" if not fatal else "FATAL:"
@@ -28,6 +30,7 @@ def err(*messages, fatal=False):
 		print("Exiting due to the last fatal error...")
 		exit()
 
+
 # https://stackoverflow.com/a/12640614
 def col2num(col):
 	num = 0
@@ -36,6 +39,7 @@ def col2num(col):
 			num = num * 26 + (ord(c.upper()) - ord('A')) + 1
 	return num-1
 
+
 # https://stackoverflow.com/a/23862195
 def num2col(num):
 	string = ""
@@ -43,6 +47,7 @@ def num2col(num):
 		num, remainder = divmod(num - 1, 26)
 		string = chr(65 + remainder) + string
 	return string
+
 
 # https://stackoverflow.com/a/6330109
 def safe_cast(val, to_type, default=None):
@@ -53,11 +58,13 @@ def safe_cast(val, to_type, default=None):
 	except (ValueError, TypeError):
 		err("You have entered a DISGUSTING value [", '"'+ sc(val)+'"', "]", fatal=True)
 
+
 def safe_num(val):
 	if ("." in str(val)):
 		return safe_cast(val, int)
 	else:
 		return safe_cast(val, float)
+
 
 # Stands for "String Clean"
 # Removes leading and trailing whitespace
@@ -91,7 +98,28 @@ for row_index,row in enumerate(config_sheet):
 		else:
 			err("FILE calls must include an input and output file.", fatal=True)
 	elif working_sheet:
-		if OPERATION == "ROW" or OPERATION == "COL":
+		if OPERATION == "REPLACE" or OPERATION == "REGREPLACE":
+			# 0             1           2
+			# (REG)REPLACE, search_str, replace_str
+			if len(row) < 3:
+				err("Not enough arguments for REPLACE operation", fatal=True)
+			search_str = sc(row[1])
+			replace_str = sc(row[2])
+			for sheet_index,row_or_col in enumerate(sheet_array):
+				cell_value = str(row_or_col[location])
+				if OPERATION == "ROW":
+					working_cell_coord[1] = location
+					working_cell_coord[0] = sheet_index
+				else:
+					working_cell_coord[1] = sheet_index
+					working_cell_coord[0] = location
+				working_sheet_index = sheet_index
+				if OPERATION == "REPLACE":
+					row_or_col[location] = cell_value.replace(search_str, replace_str)
+				else: #REGREPLACE
+					row_or_col[location] = re.sub(search_str, replace_str, cell_value)
+
+		elif OPERATION == "ROW" or OPERATION == "COL":
 			# 0        1    2         3
 			# ROW/COL, 1/a, operator, search
 			if (len(row) < 4):

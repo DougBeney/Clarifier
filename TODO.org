@@ -1,0 +1,6 @@
+* Tasks [0%]
+** TODO Tidy up code [0/3]
+*** TODO Find things that need to be tidied
+*** TODO Move DeleteIfNeeded func out of for loop
+*** TODO Don't use duplicated code for spreadsheet loop
+** TODO Add column and row selection to REPLACE commands
