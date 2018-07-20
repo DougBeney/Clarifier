@@ -118,7 +118,6 @@ for row_index,row in enumerate(config_sheet):
 					working_sheet_index = sheet_index
 					working_row = row
 					if OPERATION == "REPLACE":
-						print("replacing", search_str, "for", replace_str, "in", cell_value)
 						working_row[location] = cell_value.replace(search_str, replace_str)
 					else: #REGREPLACE
 						working_row[location] = re.sub(search_str, replace_str, cell_value)
