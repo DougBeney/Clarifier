@@ -23,17 +23,23 @@ It follows the following syntax:
 
 Instead of saving, you can even print the file to your terminal using `~print~`.
 
-`FILE, input-file.csv, ~print~`
+```
+FILE, input-file.csv, ~print~
+```
 
 After that, you can start filtering our rows and columns.
 
 The `ROW` and `COL` commands take the same amount of parameters.
 
-`{ROW or COL}, {LOCATION}, {CONDITIONAL}, {VALUE}`
+```
+{ROW or COL}, {LOCATION}, {CONDITIONAL}, {VALUE}
+```
 
 Here is an example to filter column D for all instances of "CEO":
 
-`ROW, D, is, "CEO"`
+```
+ROW, D, is, "CEO"
+```
 
 There are three main conditional options and four numerical conditional arguments:
 
