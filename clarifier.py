@@ -120,7 +120,7 @@ for row_index,row in enumerate(config_sheet):
 				if loc_len() > 1:
 					location_array[1] = col2num(location_array[1])-1
 				if loc_len() > 2:
-          location_array[2] = col2num(location_array[2])-1
+					location_array[2] = col2num(location_array[2])-1
 			else:
 				# get row array so we can easily check a col
 				sheet_array = working_sheet.row
