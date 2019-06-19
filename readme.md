@@ -60,7 +60,7 @@ The numerical conditionals are:
 - `>`
 - `>=`
 - `<`
-- `>=`
+- `<=`
 
 Especially when using numerical conditionals, you will want to tweak your start and end values for filtering.
 
